@@ -50,7 +50,7 @@ func TestConsumer(t *testing.T) {
 		Handler: func(ctx context.Context, msg []byte, finished bool) error {
 			i++
 			fmt.Println("msg", i, string(msg))
-			return baseError.System("1", "asd")
+			return baseError.New("1", "asd", baseError.WithSystem())
 		},
 	})
 	if err != nil {

@@ -219,7 +219,7 @@ func NewConsumer(c *ConsumerConfig) (*Consumer, error) {
 					retry.DelayType(c.LocalRetry),
 					retry.LastErrorOnly(true),
 					retry.RetryIf(func(err error) bool {
-						return baseError.IsSystemError(err)
+						return err != nil && !baseError.IsNotSystemError(err)
 					}),
 				)
 			} else {
@@ -227,7 +227,7 @@ func NewConsumer(c *ConsumerConfig) (*Consumer, error) {
 			}
 
 			if handlerErr != nil {
-				if !baseError.IsSystemError(handlerErr) {
+				if baseError.IsNotSystemError(handlerErr) {
 					ignoreErr = handlerErr
 					handlerErr = nil
 				}
