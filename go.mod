@@ -4,7 +4,7 @@ go 1.21.0
 
 require (
 	github.com/avast/retry-go/v4 v4.6.0
-	github.com/go-estar/base-error v1.0.4
+	github.com/go-estar/base-error v1.0.5
 	github.com/go-estar/config v1.0.0
 	github.com/go-estar/logger v1.0.0
 	github.com/go-estar/tracer v1.0.0
