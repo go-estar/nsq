@@ -10,12 +10,8 @@ github.com/frankban/quicktest v1.14.6 h1:7Xjx+VpznH+oBnejlPUj8oUpdxnVs4f8XU8WnHk
 github.com/frankban/quicktest v1.14.6/go.mod h1:4ptaffx2x8+WTWXmUCuVU6aPUX1/Mz7zb5vbUoiM6w0=
 github.com/fsnotify/fsnotify v1.7.0 h1:8JEhPFa5W2WU7YfeZzPNqzMP6Lwt7L2715Ggo0nosvA=
 github.com/fsnotify/fsnotify v1.7.0/go.mod h1:40Bi/Hjc2AVfZrqy+aj+yEI+/bRxZnMJyTJwOpGvigM=
-github.com/go-estar/base-error v1.0.4 h1:J2yjf5sLU+cbfqWvNt3P5UYrQlQGhSNp/eS7K49cPXg=
-github.com/go-estar/base-error v1.0.4/go.mod h1:CsG3ELHHMB9z50EtIBqgvdB4OvzQbp6hKUfVVBaIxzU=
-github.com/go-estar/base-error v1.0.5 h1:nF18msT49IcgbUh/UjNt9Zc9U1wdatvhy5LtxcZH18g=
-github.com/go-estar/base-error v1.0.5/go.mod h1:CsG3ELHHMB9z50EtIBqgvdB4OvzQbp6hKUfVVBaIxzU=
-github.com/go-estar/base-error v1.0.6 h1:hc+TvX9R1ANRN3j+/a74Xo7N/mHvu7k4eRIRh8t3Bgc=
-github.com/go-estar/base-error v1.0.6/go.mod h1:CsG3ELHHMB9z50EtIBqgvdB4OvzQbp6hKUfVVBaIxzU=
+github.com/go-estar/base-error v1.0.7 h1:AYSdq6gXU9B/symLM2ktIqCCMcGHOjSvNRcxf5IPGj8=
+github.com/go-estar/base-error v1.0.7/go.mod h1:CsG3ELHHMB9z50EtIBqgvdB4OvzQbp6hKUfVVBaIxzU=
 github.com/go-estar/config v1.0.0 h1:TCTN7EQSsWvHk4/iU2Gi3Y8huUzdNX0d09N0Fz7ysaA=
 github.com/go-estar/config v1.0.0/go.mod h1:fB/5i8csMx/LpqkdZ99tw3a79bcd7Ok9LS5MuFh1V78=
 github.com/go-estar/logger v1.0.0 h1:sm1uyo2TF4B+DiO2LZtCyb4VZFgX1VBiKHbTvNySCkI=
