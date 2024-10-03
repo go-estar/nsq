@@ -13,6 +13,28 @@ import (
 	"time"
 )
 
+type LocalRetry struct {
+	DelayTypeFunc retry.DelayTypeFunc
+	Attempts      uint
+}
+
+func NewLocalRetry(defaultDelay time.Duration, maxDelay time.Duration, attempts uint) *LocalRetry {
+	return &LocalRetry{
+		Attempts: attempts,
+		DelayTypeFunc: func(n uint, err error, config *retry.Config) time.Duration {
+			delay := defaultDelay * time.Duration(n+1)
+			if delay > maxDelay {
+				delay = maxDelay
+			}
+			return delay
+		},
+	}
+}
+
+func NewDefaultLocalRetry(attempts uint) *LocalRetry {
+	return NewLocalRetry(time.Second, time.Second*10, attempts)
+}
+
 type Retry struct {
 	DefaultRequeueDelay time.Duration
 	MaxRequeueDelay     time.Duration
@@ -25,33 +47,36 @@ func NewRetry(defaultRequeueDelay time.Duration, maxRequeueDelay time.Duration, 
 	}
 }
 
+func NewDefaultRetry(attempts uint16) *Retry {
+	return NewRetry(time.Second*10, time.Second*10, attempts)
+}
+
 func defaultRetry() *Retry {
-	return NewRetry(time.Second*60, time.Minute*10, 20)
+	return NewRetry(time.Second*60, time.Minute*10, 10)
 }
 
 type Handler = func(ctx context.Context, msg []byte, finished bool) error
 
 type ConsumerConfig struct {
-	NsqLookUpAddr      string
-	NsqdAddr           string
-	Broadcasting       bool
-	Channel            string
-	Name               string
-	ServerId           string
-	Topic              string
-	Concurrent         bool
-	MaxInFlight        int
-	LocalRetry         retry.DelayTypeFunc
-	LocalRetryAttempts uint
-	Retry              *Retry
-	RetryAttempts      uint16
-	RetryStrategy      func(attempts uint16) (delay time.Duration)
-	BackoffDisabled    bool
-	NsqLogger          logger.Logger
-	MsgLogger          logger.Logger
-	MsgLoggerLevel     string
-	Handler            Handler
-	SimpleHandler      func([]byte) error
+	NsqLookUpAddr   string
+	NsqdAddr        string
+	Broadcasting    bool
+	Channel         string
+	Name            string
+	ServerId        string
+	Topic           string
+	Concurrent      bool
+	MaxInFlight     int
+	LocalRetry      *LocalRetry
+	Retry           *Retry
+	RetryAttempts   uint16
+	RetryStrategy   func(attempts uint16) (delay time.Duration)
+	BackoffDisabled bool
+	NsqLogger       logger.Logger
+	MsgLogger       logger.Logger
+	MsgLoggerLevel  string
+	Handler         Handler
+	SimpleHandler   func([]byte) error
 }
 
 type ConsumerOption func(*ConsumerConfig)
@@ -215,8 +240,8 @@ func NewConsumer(c *ConsumerConfig) (*Consumer, error) {
 					func() error {
 						return c.Handler(context.Background(), m.Body, finished)
 					},
-					retry.Attempts(c.LocalRetryAttempts),
-					retry.DelayType(c.LocalRetry),
+					retry.Attempts(c.LocalRetry.Attempts),
+					retry.DelayType(c.LocalRetry.DelayTypeFunc),
 					retry.LastErrorOnly(true),
 					retry.RetryIf(func(err error) bool {
 						return err != nil && !baseError.IsNotSystemError(err)
@@ -283,55 +308,24 @@ func (c *Consumer) Disconnect() error {
 	return c.DisconnectFromNSQLookupd(c.NsqLookUpAddr)
 }
 
-var PostRetryDelays = []time.Duration{
+var defaultRetryStrategyDelays = []time.Duration{
 	0,
+	time.Second * 5,
+	time.Second * 5,
+	time.Second * 10,
 	time.Second * 30,
 	time.Minute,
-	time.Minute * 2,
 	time.Minute * 5,
 	time.Minute * 10,
 	time.Minute * 30,
 	time.Hour,
 	time.Hour * 2,
-	time.Hour * 4,
 }
 
-func PostRetryStrategy(attempts uint16) (delay time.Duration) {
+func DefaultRetryStrategy(attempts uint16) (delay time.Duration) {
 	var i = int(attempts)
-	if i > len(PostRetryDelays)-1 {
-		i = len(PostRetryDelays) - 1
+	if i > len(defaultRetryStrategyDelays)-1 {
+		i = len(defaultRetryStrategyDelays) - 1
 	}
-	return PostRetryDelays[i]
-}
-
-var QueryRetryDelays = []time.Duration{
-	0,
-	time.Second * 10,
-	time.Second * 10,
-	time.Second * 10,
-	time.Second * 10,
-	time.Second * 10,
-	time.Second * 10,
-	time.Second * 30,
-	time.Second * 30,
-	time.Second * 30,
-	time.Second * 30,
-	time.Second * 30,
-	time.Second * 30,
-	time.Minute,
-	time.Minute * 2,
-	time.Minute * 5,
-	time.Minute * 10,
-	time.Minute * 30,
-	time.Hour,
-	time.Hour * 2,
-	time.Hour * 4,
-}
-
-func QueryRetryStrategy(attempts uint16) (delay time.Duration) {
-	var i = int(attempts)
-	if i > len(QueryRetryDelays)-1 {
-		i = len(QueryRetryDelays) - 1
-	}
-	return QueryRetryDelays[i]
+	return defaultRetryStrategyDelays[i]
 }

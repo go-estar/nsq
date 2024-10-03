@@ -119,8 +119,8 @@ func (p *Producer) SendSync(topic string, data interface{}, opts ...SendOption) 
 	}
 
 	if c.LocalRetry != nil {
-		if c.RetryAttempts == 0 {
-			c.RetryAttempts = 1
+		if c.LocalRetry.Attempts == 0 {
+			c.LocalRetry.Attempts = 1
 		}
 		return retry.Do(
 			func() error {
@@ -130,8 +130,8 @@ func (p *Producer) SendSync(topic string, data interface{}, opts ...SendOption) 
 					return p.Publish(topic, body)
 				}
 			},
-			retry.Attempts(c.RetryAttempts),
-			retry.DelayType(c.LocalRetry),
+			retry.Attempts(c.LocalRetry.Attempts),
+			retry.DelayType(c.LocalRetry.DelayTypeFunc),
 			retry.LastErrorOnly(true),
 		)
 	}
@@ -152,10 +152,9 @@ func (p *Producer) DeferredSendSync(topic string, delay time.Duration, data inte
 }
 
 type SendConfig struct {
-	Ctx           context.Context
-	Delay         time.Duration
-	RetryAttempts uint
-	LocalRetry    retry.DelayTypeFunc
+	Ctx        context.Context
+	Delay      time.Duration
+	LocalRetry *LocalRetry
 }
 
 type SendOption func(*SendConfig)
@@ -170,9 +169,17 @@ func WithDelay(val time.Duration) SendOption {
 		opts.Delay = val
 	}
 }
-func WithLocalRetry(localRetry retry.DelayTypeFunc, attempts uint) SendOption {
+func WithLocalRetry(attempts uint, fn retry.DelayTypeFunc) SendOption {
 	return func(opts *SendConfig) {
-		opts.LocalRetry = localRetry
-		opts.RetryAttempts = attempts
+		opts.LocalRetry = &LocalRetry{
+			DelayTypeFunc: fn,
+			Attempts:      attempts,
+		}
+	}
+}
+
+func WithDefaultLocalRetry(attempts uint) SendOption {
+	return func(opts *SendConfig) {
+		opts.LocalRetry = NewDefaultLocalRetry(attempts)
 	}
 }
