@@ -11,8 +11,8 @@ github.com/go-estar/base-error v1.0.7 h1:AYSdq6gXU9B/symLM2ktIqCCMcGHOjSvNRcxf5I
 github.com/go-estar/base-error v1.0.7/go.mod h1:CsG3ELHHMB9z50EtIBqgvdB4OvzQbp6hKUfVVBaIxzU=
 github.com/go-estar/config v1.0.0 h1:TCTN7EQSsWvHk4/iU2Gi3Y8huUzdNX0d09N0Fz7ysaA=
 github.com/go-estar/config v1.0.0/go.mod h1:fB/5i8csMx/LpqkdZ99tw3a79bcd7Ok9LS5MuFh1V78=
-github.com/go-estar/logger v1.0.1 h1:/3Kc6ILWpumLogWB8W6LqdHDsxaCPWntaVQ5GJpRUXg=
-github.com/go-estar/logger v1.0.1/go.mod h1:uBDWGdTOmG3K09SpRFo0jf6HaKwcVt4RllVUn3/GuoA=
+github.com/go-estar/logger v1.0.2 h1:UlmFEksgSINODv2tusxyS6Ub/0gMhsD6RRigLbab25U=
+github.com/go-estar/logger v1.0.2/go.mod h1:uBDWGdTOmG3K09SpRFo0jf6HaKwcVt4RllVUn3/GuoA=
 github.com/go-resty/resty/v2 v2.14.0 h1:/rhkzsAqGQkozwfKS5aFAbb6TyKd3zyFRWcdRXLPCAU=
 github.com/go-resty/resty/v2 v2.14.0/go.mod h1:IW6mekUOsElt9C7oWr0XRt9BNSD6D5rr9mhk6NjmNHg=
 github.com/golang/snappy v0.0.1 h1:Qgr9rKW7uDUkrbSmQeiDsGa8SjGyCOGtuasMWwvp2P4=

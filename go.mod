@@ -8,7 +8,7 @@ require (
 	github.com/avast/retry-go/v4 v4.6.0
 	github.com/go-estar/base-error v1.0.7
 	github.com/go-estar/config v1.0.0
-	github.com/go-estar/logger v1.0.1
+	github.com/go-estar/logger v1.0.2
 	github.com/go-resty/resty/v2 v2.14.0
 	github.com/jinzhu/copier v0.4.0
 	github.com/nsqio/go-nsq v1.1.0
