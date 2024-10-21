@@ -1,12 +1,14 @@
 module github.com/go-estar/nsq
 
-go 1.21.0
+go 1.22.0
+
+toolchain go1.22.8
 
 require (
 	github.com/avast/retry-go/v4 v4.6.0
 	github.com/go-estar/base-error v1.0.7
 	github.com/go-estar/config v1.0.0
-	github.com/go-estar/logger v1.0.0
+	github.com/go-estar/logger v1.0.1
 	github.com/go-resty/resty/v2 v2.14.0
 	github.com/jinzhu/copier v0.4.0
 	github.com/nsqio/go-nsq v1.1.0
@@ -31,10 +33,10 @@ require (
 	github.com/subosito/gotenv v1.6.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
-	golang.org/x/exp v0.0.0-20240904232852-e7e105dedf7e // indirect
+	golang.org/x/exp v0.0.0-20241009180824-f66d83c29e7c // indirect
 	golang.org/x/net v0.27.0 // indirect
-	golang.org/x/sys v0.25.0 // indirect
-	golang.org/x/text v0.18.0 // indirect
+	golang.org/x/sys v0.26.0 // indirect
+	golang.org/x/text v0.19.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect

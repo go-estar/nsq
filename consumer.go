@@ -222,13 +222,13 @@ func NewConsumer(c *ConsumerConfig) (*Consumer, error) {
 				if handlerErr != nil || c.MsgLoggerLevel == "info" {
 					c.MsgLogger.Info(
 						string(m.Body),
-						c.MsgLogger.Field("time", startTime),
-						c.MsgLogger.Field("latency", latency),
-						c.MsgLogger.Field("topic", c.Topic),
-						c.MsgLogger.Field("id", fmt.Sprintf("%s", m.ID)),
-						c.MsgLogger.Field("attempts", m.Attempts),
-						c.MsgLogger.Field("ignore_err", ignoreErr),
-						c.MsgLogger.Field("error", handlerErr),
+						logger.NewField("startTime", startTime),
+						logger.NewField("latency", latency),
+						logger.NewField("topic", c.Topic),
+						logger.NewField("id", fmt.Sprintf("%s", m.ID)),
+						logger.NewField("attempts", m.Attempts),
+						logger.NewField("ignore_err", ignoreErr),
+						logger.NewField("error", handlerErr),
 					)
 				}
 			}()

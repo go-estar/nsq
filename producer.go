@@ -109,8 +109,8 @@ func (p *Producer) SendSync(topic string, data interface{}, opts ...SendOption) 
 	defer func() {
 		if err != nil || p.MsgLoggerLevel == "info" {
 			p.MsgLogger.Info(string(body),
-				p.MsgLogger.Field("topic", topic),
-				p.MsgLogger.Field("error", err),
+				logger.NewField("topic", topic),
+				logger.NewField("error", err),
 			)
 		}
 	}()
