@@ -225,6 +225,7 @@ func NewConsumer(c *ConsumerConfig) (*Consumer, error) {
 						logger.NewField("startTime", startTime),
 						logger.NewField("latency", latency),
 						logger.NewField("topic", c.Topic),
+						logger.NewField("channel", c.Channel),
 						logger.NewField("id", fmt.Sprintf("%s", m.ID)),
 						logger.NewField("attempts", m.Attempts),
 						logger.NewField("ignore_err", ignoreErr),
